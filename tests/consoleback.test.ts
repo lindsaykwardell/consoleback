@@ -41,4 +41,10 @@ describe("natural-order", () => {
 
     expect(log).toContain("Test")
   })
+
+  it("logs time", () => {
+    consoleback({showTime: true})
+
+    console.log("The time is...")
+  })
 });

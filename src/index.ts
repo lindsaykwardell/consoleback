@@ -31,7 +31,7 @@ const consoleback = (
   console.log = (message?: any, ...optionalParams: any[]) => {
     callback("log", message, optionalParams);
     real.log(
-      `${showTime ? `[ ${new Date().toLocaleString()} ] ` : ""}${
+      `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
         showMsgType ? `[ LOG ]` : ""
       }`,
       message,
@@ -42,7 +42,7 @@ const consoleback = (
   console.error = (message?: any, ...optionalParams: any[]) => {
     callback("error", message, optionalParams);
     real.error(
-      `${showTime ? `[ ${new Date().toLocaleString()} ] ` : ""}${
+      `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
         showMsgType ? `[ ERR ]` : ""
       }`,
       message,
@@ -53,7 +53,7 @@ const consoleback = (
   console.warn = (message?: any, ...optionalParams: any[]) => {
     callback("warn", message, optionalParams);
     real.warn(
-      `${showTime ? `[ ${new Date().toLocaleString()} ] ` : ""}${
+      `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
         showMsgType ? `[ WRN ]` : ""
       }`,
       message,
