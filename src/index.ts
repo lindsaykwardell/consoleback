@@ -29,36 +29,27 @@ const consoleback = (
     warn: console.warn
   };
   console.log = (message?: any, ...optionalParams: any[]) => {
-    callback("log", message, optionalParams);
-    real.log(
-      `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
-        showMsgType ? `[ LOG ]` : ""
-      }`,
-      message,
-      ...optionalParams
-    );
+    const msg = `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
+      showMsgType ? `[ LOG ] ` : ""
+    }${message}`;
+    callback("log", msg, optionalParams);
+    real.log(msg, ...optionalParams);
   };
 
   console.error = (message?: any, ...optionalParams: any[]) => {
-    callback("error", message, optionalParams);
-    real.error(
-      `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
-        showMsgType ? `[ ERR ]` : ""
-      }`,
-      message,
-      ...optionalParams
-    );
+    const msg = `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
+      showMsgType ? `[ ERR ] ` : ""
+    }${message}`;
+    callback("error", msg, optionalParams);
+    real.error(msg, ...optionalParams);
   };
 
   console.warn = (message?: any, ...optionalParams: any[]) => {
-    callback("warn", message, optionalParams);
-    real.warn(
-      `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
-        showMsgType ? `[ WRN ]` : ""
-      }`,
-      message,
-      ...optionalParams
-    );
+    const msg = `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
+      showMsgType ? `[ WRN ]` : ""
+    }${message}`;
+    callback("warn", msg, optionalParams);
+    real.warn(msg, ...optionalParams);
   };
 };
 
