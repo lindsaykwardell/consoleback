@@ -29,7 +29,9 @@ consoleback: (opts?: {
     callback?: (type: string, message: any, ...optionalParams: any[]) => void;
     showMsgType?: boolean;
     showTime?: boolean;
-}) => void
+}) => terminate
+
+terminate: () => void
 
 ```
 All options are optional.
@@ -50,12 +52,16 @@ When true, [ LOG ], [ WRN ], or [ ERR ] will appear appended to the start of eac
 
 Whether to show time information (defaults to false)
 
+`terminate: () => void`
+
+Restores normal logging.
+
 <a id="/examples"></a>&nbsp;
 
 ## Example
 
 ```javascript
-consoleback({
+const terminateLog = consoleback({
   callback: (type, message, optionalParams) => {
     // Perform actions on logged messages
   },
@@ -66,6 +72,11 @@ consoleback({
 console.log("The time is...");
 
 // [ 2019-10-01T20:38:04.586Z ] [ LOG ] The time is...
+
+terminateLog();
+console.log("Goodbye!");
+
+// Goodbye!
 
 ```
 

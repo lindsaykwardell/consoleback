@@ -51,6 +51,14 @@ const consoleback = (
     callback("warn", msg, optionalParams);
     real.warn(msg, ...optionalParams);
   };
+
+  const terminate = () => {
+    console.log = real.log;
+    console.warn = real.warn;
+    console.error = real.error;
+  };
+
+  return terminate;
 };
 
 export = consoleback;
