@@ -1,6 +1,6 @@
 {
   "name": "consoleback",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Lindsay Wardell",
   "description": "Improved logging for Javascript applications",
   "main": "lib/index.js",

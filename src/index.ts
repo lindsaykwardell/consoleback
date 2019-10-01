@@ -62,4 +62,4 @@ const consoleback = (
   };
 };
 
-export default consoleback;
+export = consoleback;
