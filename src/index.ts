@@ -46,7 +46,7 @@ const consoleback = (
 
   console.warn = (message?: any, ...optionalParams: any[]) => {
     const msg = `${showTime ? `[ ${new Date().toISOString()} ] ` : ""}${
-      showMsgType ? `[ WRN ]` : ""
+      showMsgType ? `[ WRN ] ` : ""
     }${message}`;
     callback("warn", msg, optionalParams);
     real.warn(msg, ...optionalParams);
