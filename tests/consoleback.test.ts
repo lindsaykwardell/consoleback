@@ -1,50 +1,48 @@
 import consoleback from "../src/index";
 
-const oldLog = console.log
-const oldWarn = console.warn
-const oldErr = console.error
+const oldLog = console.log;
+const oldWarn = console.warn;
+const oldErr = console.error;
+const oldInfo = console.info;
+const oldDebug = console.debug;
 
 afterEach(() => {
-  console.log = oldLog
-  console.warn = oldWarn
-  console.error = oldErr
-})
+  console.log = oldLog;
+  console.warn = oldWarn;
+  console.error = oldErr;
+  console.info = oldInfo;
+  console.debug = oldDebug;
+});
 
 describe("natural-order", () => {
-  it("allows logging to console.log", () => {
-    consoleback()
+  it("allows logging to console", () => {
+    consoleback();
 
-    console.log("Hi!")
-  })
-
-  it("allows logging to console.warn", () => {
-    consoleback()
-
-    console.warn("Hi!")
-  })
-
-  it("allows logging to console.error", () => {
-    consoleback()
-
-    console.error("Hi!")
-  })
+    console.log("Hi!");
+    console.info("Informative...");
+    console.warn("Hold up.");
+    console.error("ERROR!!!");
+    console.debug("Debug this!");
+  });
 
   it("accepts callback", () => {
     const log: string[] = [];
 
-    consoleback({callback: (type, message, optionalParams) => log.push(message)})
+    consoleback({
+      callback: (type, message, optionalParams) => log.push(message)
+    });
 
     expect(log.length).toEqual(0);
-    expect(log.find(v => v === "Test")).toBeFalsy()
+    expect(log.find(v => v === "Test")).toBeFalsy();
 
-    console.log("Test")
+    console.log("Test");
 
-    expect(log).toContain("Test")
-  })
+    expect(log).toContain("[ LOG ] Test");
+  });
 
   it("logs time", () => {
-    consoleback({showTime: true})
+    consoleback({ showTime: true });
 
-    console.log("The time is...")
-  })
+    console.log("The time is...");
+  });
 });

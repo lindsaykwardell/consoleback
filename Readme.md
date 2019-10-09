@@ -4,8 +4,9 @@
 
 <a id="/features"></a>&nbsp;
 
-- Uses console.log, console.warn, console.error
+- Uses console.log, console.warn, console.error, console.info, and console.debug
 - Adds timestamp and log type to message (if desired)
+  - Time formatted to a local string with date-fns
 - Allows callback that gives the application access to the log.
 
 <a id="/usage"></a>&nbsp;
