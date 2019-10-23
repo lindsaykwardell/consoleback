@@ -26,11 +26,11 @@ const consoleback = (
     ...opts
   };
   const real = {
-    log: console.log,
+    debug: console.debug,
     error: console.error,
-    warn: console.warn,
     info: console.info,
-    debug: console.debug
+    log: console.log,
+    warn: console.warn,
   };
   console.log = (message?: any, ...optionalParams: any[]) => {
     const msg = `${

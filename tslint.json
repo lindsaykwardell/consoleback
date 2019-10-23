@@ -9,7 +9,8 @@
     "no-shadowed-variable": [false],
     "object-literal-key-quotes": [false],
     "curly": [false],
-    "semicolon": [true]
+    "semicolon": [true],
+    "no-console": false
   },
   "rulesDirectory": [],
   "linterOptions": {
