@@ -1,6 +1,6 @@
 {
   "name": "consoleback",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Lindsay Wardell",
   "description": "Improved logging for Javascript applications",
   "main": "lib/index.js",
@@ -9,8 +9,8 @@
     "test": "jest --config jestconfig.json",
     "lint": "tslint ./src/index.ts",
     "build": "tsc",
-    "prepare": "npm run build",
-    "preversion": "npm run lint"
+    "prepare": "yarn build",
+    "preversion": "yarn lint"
   },
   "keywords": [
     "console",
