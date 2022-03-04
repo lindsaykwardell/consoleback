@@ -8,13 +8,13 @@ const consoleback = (
   } = {
     callback: () => null,
     showMsgType: true,
-    showTime: false
+    showTime: false,
   }
 ) => {
   const {
     callback,
     showMsgType,
-    showTime
+    showTime,
   }: {
     callback: (type: string, message: string, ...optionalParams: any[]) => void;
     showMsgType: boolean;
@@ -23,7 +23,7 @@ const consoleback = (
     callback: () => null,
     showMsgType: true,
     showTime: false,
-    ...opts
+    ...opts,
   };
   const real = {
     debug: console.debug,
@@ -93,4 +93,4 @@ const consoleback = (
   return terminate;
 };
 
-export = consoleback;
+export default consoleback;

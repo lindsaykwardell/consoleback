@@ -1,3 +1,4 @@
+import { describe, it, expect, afterEach } from "vitest";
 import consoleback from "../src/index";
 
 const oldLog = console.log;
@@ -29,11 +30,11 @@ describe("natural-order", () => {
     const log: string[] = [];
 
     consoleback({
-      callback: (type, message, optionalParams) => log.push(message)
+      callback: (type, message, optionalParams) => log.push(message),
     });
 
     expect(log.length).toEqual(0);
-    expect(log.find(v => v === "Test")).toBeFalsy();
+    expect(log.find((v) => v === "Test")).toBeFalsy();
 
     console.log("Test");
 
