@@ -1,5 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import consoleback from "../src/index";
+import { format } from 'date-fns'
 
 const oldLog = console.log;
 const oldWarn = console.warn;
@@ -19,11 +20,17 @@ describe("natural-order", () => {
   it("allows logging to console", () => {
     consoleback();
 
-    console.log("Hi!");
-    console.info("Informative...");
-    console.warn("Hold up.");
-    console.error("ERROR!!!");
-    console.debug("Debug this!");
+    const logResult = console.log("Hi!");
+    const infoResult = console.info("Informative...");
+    const warnResult = console.warn("Hold up.");
+    const errorResult = console.error("ERROR!!!");
+    const debugResult = console.debug("Debug this!");
+
+    expect(logResult).toEqual("[ LOG ] Hi!");
+    expect(infoResult).toEqual("[ INF ] Informative...");
+    expect(warnResult).toEqual("[ WRN ] Hold up.");
+    expect(errorResult).toEqual("[ ERR ] ERROR!!!");
+    expect(debugResult).toEqual("[ BUG ] Debug this!");
   });
 
   it("accepts callback", () => {
@@ -42,8 +49,18 @@ describe("natural-order", () => {
   });
 
   it("logs time", () => {
-    consoleback({ showTime: true });
+    consoleback({ showTime: true, timeFormat: "yyyy-MM-dd" });
 
-    console.log("The time is...");
+    const result = console.log("The time is...");
+
+    expect(result).toEqual(`[ ${format(new Date(), "yyyy-MM-dd")} ] [ LOG ] The time is...`);
   });
+
+  it("allows disabling the type label", () => {
+    consoleback({ showMsgType: false });
+
+    const result = console.log("Who knows what I am?");
+
+    expect(result).toEqual("Who knows what I am?");
+  })
 });

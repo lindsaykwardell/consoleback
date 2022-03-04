@@ -1,28 +1,35 @@
 import { format } from "date-fns";
 
+type Type = "log" | "error" | "warn" | "info" | "debug"
+
 const consoleback = (
   opts: {
-    callback?: (type: string, message: any, ...optionalParams: any[]) => void;
+    callback?: (type: Type, message: any, ...optionalParams: any[]) => void;
     showMsgType?: boolean;
     showTime?: boolean;
+    timeFormat?: string;
   } = {
     callback: () => null,
     showMsgType: true,
     showTime: false,
+    timeFormat: "yyyy-MM-dd'T'HH:mm:ss.SSSxxx",
   }
 ) => {
   const {
     callback,
     showMsgType,
     showTime,
+    timeFormat,
   }: {
-    callback: (type: string, message: string, ...optionalParams: any[]) => void;
+    callback: (type: Type, message: string, ...optionalParams: any[]) => void;
     showMsgType: boolean;
     showTime: boolean;
+    timeFormat: string;
   } = {
     callback: () => null,
     showMsgType: true,
     showTime: false,
+    timeFormat: "yyyy-MM-dd'T'HH:mm:ss.SSSxxx",
     ...opts,
   };
   const real = {
@@ -32,54 +39,59 @@ const consoleback = (
     log: console.log,
     warn: console.warn,
   };
-  console.log = (message?: any, ...optionalParams: any[]) => {
+
+  function logger(
+    type: Type,
+    message?: any,
+    ...optionalParams: any[]
+  ) {
+    const [fn, label]: [
+      (message?: any, ...optionalParams: any[]) => void,
+      string
+    ] = (() => {
+      switch (type) {
+        case "log":
+          return [real.log, "LOG"];
+        case "error":
+          return [real.error, "ERR"];
+        case "warn":
+          return [real.warn, "WRN"];
+        case "info":
+          return [real.info, "INF"];
+        case "debug":
+          return [real.debug, "BUG"];
+      }
+    })();
+
     const msg = `${
       showTime
-        ? `[ ${format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")} ] `
+        ? `[ ${format(new Date(), timeFormat)} ] `
         : ""
-    }${showMsgType ? `[ LOG ] ` : ""}${message}`;
-    callback("log", msg, optionalParams);
-    real.log(msg, ...optionalParams);
+    }${showMsgType ? `[ ${label} ] ` : ""}${message}`;
+    callback(type, msg, optionalParams);
+    fn(msg, ...optionalParams);
+
+    return msg;
+  }
+
+  console.log = (message?: any, ...optionalParams: any[]) => {
+    return logger("log", message, ...optionalParams);
   };
 
   console.error = (message?: any, ...optionalParams: any[]) => {
-    const msg = `${
-      showTime
-        ? `[ ${format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")} ] `
-        : ""
-    }${showMsgType ? `[ ERR ] ` : ""}${message}`;
-    callback("error", msg, optionalParams);
-    real.error(msg, ...optionalParams);
+    return logger("error", message, ...optionalParams);
   };
 
   console.warn = (message?: any, ...optionalParams: any[]) => {
-    const msg = `${
-      showTime
-        ? `[ ${format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")} ] `
-        : ""
-    }${showMsgType ? `[ WRN ] ` : ""}${message}`;
-    callback("warn", msg, optionalParams);
-    real.warn(msg, ...optionalParams);
+    return logger("warn", message, ...optionalParams);
   };
 
   console.info = (message?: any, ...optionalParams: any[]) => {
-    const msg = `${
-      showTime
-        ? `[ ${format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")} ] `
-        : ""
-    }${showMsgType ? `[ INF ] ` : ""}${message}`;
-    callback("info", msg, optionalParams);
-    real.info(msg, ...optionalParams);
+    return logger("info", message, ...optionalParams);
   };
 
   console.debug = (message?: any, ...optionalParams: any[]) => {
-    const msg = `${
-      showTime
-        ? `[ ${format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")} ] `
-        : ""
-    }${showMsgType ? `[ BUG ] ` : ""}${message}`;
-    callback("debug", msg, optionalParams);
-    real.debug(msg, ...optionalParams);
+    return logger("debug", message, ...optionalParams);
   };
 
   const terminate = () => {
